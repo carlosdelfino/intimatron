@@ -4,7 +4,10 @@
 #include "Arduino.h"
 #include <Keypad.h">
 
+#define DELAY_COEF .8
+
 #define SHOW_EVENTS true
+#define SHOW_ON_HOOK true
 
 #define KEY_ROWS 4
 #define KEY_COLS 4
@@ -41,14 +44,6 @@ byte P1_COL_PINS[KEY_COLS] = {P1_KC1, P1_KC2, P1_KC3, P1_KC4}; //connect to the 
 
 #define P1_KEYS_HOLD_TIME 500
 #define P1_KEYS_DEBOUNCE_TIME 250
-
-// ** KeyBoard Map **
-//char P1_KEYS[KEY_ROWS][KEY_COLS][] ={
-//   {"/phone/1/key/1", "/phone/1/key/2", "/phone/1/key/3", "/phone/1/key/A"},
-//   {"/phone/1/key/1", "/phone/1/key/1", "/phone/1/key/6", "/phone/1/key/B"},
-//   {"/phone/1/key/1", "/phone/1/key/1", "/phone/1/key/9", "/phone/1/key/C"},
-//   {"/phone/1/key/*", "/phone/1/key/0", "/phone/1/key/#", "/phone/1/key/D"},
-//} 
 
 // ** Gancho P2 **
 #define P1_HOOK 25

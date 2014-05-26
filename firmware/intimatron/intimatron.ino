@@ -1,29 +1,16 @@
 #include <Keypad.h>
 #include "parameters.h"
+#include "phone.h"
 
-
-struct Phone_t{
-  byte id;
-  Keypad kp;
-}  
-p[4] = {
-  {
-    1, Keypad( KEYS_MAP, P1_ROW_PINS, P1_COL_PINS, KEY_ROWS, KEY_COLS )                }
-  ,
-  {
-    2, Keypad( KEYS_MAP, P2_ROW_PINS, P2_COL_PINS, KEY_ROWS, KEY_COLS )                }
-  ,
-  {
-    3, Keypad( KEYS_MAP, P3_ROW_PINS, P3_COL_PINS, KEY_ROWS, KEY_COLS )                }
-  ,
-  {
-    4, Keypad( KEYS_MAP, P4_ROW_PINS, P4_COL_PINS, KEY_ROWS, KEY_COLS )                }
-};
-
-void myKeyPadListener(Phone_t ph, KeypadEvent key);
+bool onHookChk(Phone ph);
+void myKeyPadListener(Phone ph, KeypadEvent key);
 
 void setup() {
   Serial.begin(9600);
+
+  for(int i=0; i< PHONE_COUNT;i++){
+    pinMode(p[i].hook,INPUT_PULLUP);
+  }
 
   p[0].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
   p[0].kp.setHoldTime(P1_KEYS_HOLD_TIME);               // Default is 1000mS
@@ -46,23 +33,50 @@ void setup() {
   p[4].kp.setDebounceTime(P5_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 }
 
+
 void loop() {
-  // put your main code here, to run repeatedly: 
-  for(int i=0;i<5;i++){
-    char key = p[i].kp.getKey();
-    if (key) {
-      Serial.print("Loop: Key ");
-      Serial.println((char)key);
+  for(int i=0;i< PHONE_COUNT;i++){
+    Phone ph = p[i];
+    if(offHookChk(ph)){
+      Keypad kp = ph.kp;
+      char key = kp.getKey();
+      if (!key){
+        String msg = String("/phone/");
+        msg += ph.id;
+        msg += "/nothing/";
+      }
     }
     else{
-      Serial.println("/nothing/");
+      delay(300/DELAY_COEF);
     }
     delay(100);
   }
-  delay(300);
+  delay(200);
 } 
 
-void myKeyPadListener(Phone_t ph, KeypadEvent key){
+bool offHookChk(Phone ph){
+  static bool lastHook;
+  bool offHook = !digitalRead(ph.hook);
+  digitalWrite(ph.led,offHook);
+  if(SHOW_ON_HOOK || (lastHook != offHook)){
+    String msg = "/Phone/";
+    msg += ph.id;
+    msg += "/hook/";
+    msg += offHook?"off/":"on/";
+    Serial.println(msg);
+  }
+  else if(offHook){
+    String msg = "/Phone/";
+    msg += ph.id;
+    msg += "/hook/off/";
+    Serial.println(msg);
+  }
+  lastHook = offHook;
+  return offHook;
+}
+
+
+ void myKeyPadListener(Phone ph, KeypadEvent key){
 
   byte phoneId = ph.id;
   Keypad kp = ph.kp;
@@ -120,6 +134,12 @@ void P4_KeyPadEvent(KeypadEvent key){
 void P5_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[4], key);
 }
+
+
+
+
+
+
 
 
 
