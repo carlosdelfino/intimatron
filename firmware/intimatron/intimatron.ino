@@ -47,11 +47,11 @@ void loop() {
       }
     }
     else{
-      delay(300/DELAY_COEF);
+      delay(DELAY_ONHOOK * DELAY_COEF);
     }
-    delay(100);
+    delay(DELAY_INTERPHONE * DELAY_COEF);
   }
-  delay(200);
+  delay(DELAY_LOOP * DELAY_COEF);
 } 
 
 bool offHookChk(Phone ph){
@@ -87,7 +87,9 @@ bool offHookChk(Phone ph){
   if(SHOW_EVENTS){
     msg = String("/phone/");
     msg+=phoneId;
-    msg+="/key/event/";
+    msg+="/key/";
+    msg+=(char)key;
+    msg+="/event/";
     switch (state){
     case PRESSED:
       msg+="PRESSED";

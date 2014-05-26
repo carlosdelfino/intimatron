@@ -5,7 +5,10 @@
 #include <variant.h>
 #include <Keypad.h>
 
-#define DELAY_COEF .8
+#define DELAY_COEF .5
+#define DELAY_ONHOOK 300
+#define DELAY_INTERPHONE 100
+#define DELAY_LOOP 100
 
 #define SHOW_EVENTS true
 #define SHOW_ON_HOOK true
@@ -66,10 +69,10 @@ byte P1_COL_PINS[KEY_COLS] = {P1_KC1, P1_KC2, P1_KC3, P1_KC4}; //connect to the 
 #define P2_KC3  51
 #define P2_KC4  53
 #if defined(__SAM3U4E__) || defined(__SAM3X8E__) || defined(__SAM3X8H__)
-#define P2_KR1 ADC12
-#define P2_KR2 ADC13
-#define P2_KR4 ADC14
-#define P2_KR3 ADC15
+#define P2_KR1 DAC0
+#define P2_KR2 DAC1
+#define P2_KR4 CANRX
+#define P2_KR3 CANTX
 #elif defined(A12) && defined(A13) && defined(A14) && defined(A15)
 #define P2_KR1 A12
 #define P2_KR2 A13
