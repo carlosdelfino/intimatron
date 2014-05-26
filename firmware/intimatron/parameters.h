@@ -10,8 +10,8 @@
 #define DELAY_INTERPHONE 100
 #define DELAY_LOOP 100
 
-#define SHOW_EVENTS true
-#define SHOW_ON_HOOK true
+#define SHOW_KEY_EVENTS true
+#define SHOW_ON_HOOK_EVENTS false
 
 #define KEY_ROWS 4
 #define KEY_COLS 4
@@ -73,7 +73,7 @@ byte P1_COL_PINS[KEY_COLS] = {P1_KC1, P1_KC2, P1_KC3, P1_KC4}; //connect to the 
 #define P2_KR2 DAC1
 #define P2_KR4 CANRX
 #define P2_KR3 CANTX
-#elif defined(A12) && defined(A13) && defined(A14) && defined(A15)
+#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
 #define P2_KR1 A12
 #define P2_KR2 A13
 #define P2_KR4 A14

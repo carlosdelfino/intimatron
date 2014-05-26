@@ -5,11 +5,15 @@
 bool onHookChk(Phone ph);
 void myKeyPadListener(Phone ph, KeypadEvent key);
 
+static bool lastHook[PHONE_COUNT];
+
 void setup() {
   Serial.begin(9600);
 
+
   for(int i=0; i< PHONE_COUNT;i++){
     pinMode(p[i].hook,INPUT_PULLUP);
+    lastHook[i] = true;
   }
 
   p[0].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
@@ -55,10 +59,10 @@ void loop() {
 } 
 
 bool offHookChk(Phone ph){
-  static bool lastHook;
+  
   bool offHook = !digitalRead(ph.hook);
   digitalWrite(ph.led,offHook);
-  if(SHOW_ON_HOOK || (lastHook != offHook)){
+  if(SHOW_ON_HOOK_EVENTS || (lastHook[ph.id] != offHook)){
     String msg = "/Phone/";
     msg += ph.id;
     msg += "/hook/";
@@ -71,7 +75,7 @@ bool offHookChk(Phone ph){
     msg += "/hook/off/";
     Serial.println(msg);
   }
-  lastHook = offHook;
+  lastHook[ph.id] = offHook;
   return offHook;
 }
 
@@ -84,7 +88,7 @@ bool offHookChk(Phone ph){
   byte state = kp.getState();
 
   String msg;
-  if(SHOW_EVENTS){
+  if(SHOW_KEY_EVENTS){
     msg = String("/phone/");
     msg+=phoneId;
     msg+="/key/";
