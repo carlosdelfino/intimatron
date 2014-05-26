@@ -1,8 +1,9 @@
 #ifndef PARAMETERS_INTIMATRON
 #define PARAMETERS_INTIMATRON
 
-#include "Arduino.h"
-#include <Keypad.h">
+#include <Arduino.h>
+#include <variant.h>
+#include <Keypad.h>
 
 #define DELAY_COEF .8
 
@@ -64,10 +65,19 @@ byte P1_COL_PINS[KEY_COLS] = {P1_KC1, P1_KC2, P1_KC3, P1_KC4}; //connect to the 
 #define P2_KC2  49
 #define P2_KC3  51
 #define P2_KC4  53
+#if defined(__SAM3U4E__) || defined(__SAM3X8E__) || defined(__SAM3X8H__)
+#define P2_KR1 ADC12
+#define P2_KR2 ADC13
+#define P2_KR4 ADC14
+#define P2_KR3 ADC15
+#elif defined(A12) && defined(A13) && defined(A14) && defined(A15)
 #define P2_KR1 A12
 #define P2_KR2 A13
-#define P2_KR3 A15
 #define P2_KR4 A14
+#define P2_KR3 A15
+#else
+#error "Este Firmware somente funciona com Arduino Mega e Arduino DUE"
+#endif
 
 byte P2_ROW_PINS[KEY_ROWS] = {P2_KR1, P2_KR2, P2_KR3, P2_KR4}; //connect to the row pinouts of the keypad
 byte P2_COL_PINS[KEY_COLS] = {P2_KC1, P2_KC2, P2_KC3, P2_KC4}; //connect to the column pinouts of the keypad
