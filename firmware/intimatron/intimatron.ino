@@ -8,16 +8,16 @@ struct Phone_t{
 }  
 p[4] = {
   {
-    1, Keypad( KEYS_MAP, T1_ROW_PINS, T1_COL_PINS, KEY_ROWS, KEY_COLS )                }
+    1, Keypad( KEYS_MAP, P1_ROW_PINS, P1_COL_PINS, KEY_ROWS, KEY_COLS )                }
   ,
   {
-    2, Keypad( KEYS_MAP, T2_ROW_PINS, T2_COL_PINS, KEY_ROWS, KEY_COLS )                }
+    2, Keypad( KEYS_MAP, P2_ROW_PINS, P2_COL_PINS, KEY_ROWS, KEY_COLS )                }
   ,
   {
-    3, Keypad( KEYS_MAP, T3_ROW_PINS, T3_COL_PINS, KEY_ROWS, KEY_COLS )                }
+    3, Keypad( KEYS_MAP, P3_ROW_PINS, P3_COL_PINS, KEY_ROWS, KEY_COLS )                }
   ,
   {
-    4, Keypad( KEYS_MAP, T4_ROW_PINS, T4_COL_PINS, KEY_ROWS, KEY_COLS )                }
+    4, Keypad( KEYS_MAP, P4_ROW_PINS, P4_COL_PINS, KEY_ROWS, KEY_COLS )                }
 };
 
 void myKeyPadListener(Phone_t ph, KeypadEvent key);
@@ -25,25 +25,25 @@ void myKeyPadListener(Phone_t ph, KeypadEvent key);
 void setup() {
   Serial.begin(9600);
 
-  p[0].kp.addEventListener(T1_KeyPadEvent);  // Add an event listener.
-  p[0].kp.setHoldTime(T1_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[0].kp.setDebounceTime(T1_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[0].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
+  p[0].kp.setHoldTime(P1_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[0].kp.setDebounceTime(P1_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[1].kp.addEventListener(T2_KeyPadEvent);  // Add an event listener.
-  p[1].kp.setHoldTime(T2_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[1].kp.setDebounceTime(T2_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[1].kp.addEventListener(P2_KeyPadEvent);  // Add an event listener.
+  p[1].kp.setHoldTime(P2_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[1].kp.setDebounceTime(P2_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[2].kp.addEventListener(T3_KeyPadEvent);  // Add an event listener.
-  p[2].kp.setHoldTime(T3_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[2].kp.setDebounceTime(T3_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[2].kp.addEventListener(P3_KeyPadEvent);  // Add an event listener.
+  p[2].kp.setHoldTime(P3_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[2].kp.setDebounceTime(P3_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[3].kp.addEventListener(T4_KeyPadEvent);  // Add an event listener.
-  p[3].kp.setHoldTime(T4_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[3].kp.setDebounceTime(T4_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[3].kp.addEventListener(P4_KeyPadEvent);  // Add an event listener.
+  p[3].kp.setHoldTime(P4_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[3].kp.setDebounceTime(P4_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[4].kp.addEventListener(T5_KeyPadEvent);  // Add an event listener.
-  p[4].kp.setHoldTime(T5_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[4].kp.setDebounceTime(T5_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[4].kp.addEventListener(P5_KeyPadEvent);  // Add an event listener.
+  p[4].kp.setHoldTime(P5_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[4].kp.setDebounceTime(P5_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 }
 
 void loop() {
@@ -105,19 +105,19 @@ void myKeyPadListener(Phone_t ph, KeypadEvent key){
   }
 }
 
-void T1_KeyPadEvent(KeypadEvent key){
+void P1_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[0], key);
 }
-void T2_KeyPadEvent(KeypadEvent key){
+void P2_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[1], key);
 }
-void T3_KeyPadEvent(KeypadEvent key){
+void P3_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[2], key);
 }
-void T4_KeyPadEvent(KeypadEvent key){
+void P4_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[3], key);
 }
-void T5_KeyPadEvent(KeypadEvent key){
+void P5_KeyPadEvent(KeypadEvent key){
   myKeyPadListener(p[4], key);
 }
 
