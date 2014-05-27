@@ -10,11 +10,12 @@ static bool lastHook[PHONE_COUNT];
 void setup() {
   Serial.begin(9600);
 
-
-  for(int i=0; i< PHONE_COUNT;i++){
-    pinMode(p[i].hook,INPUT_PULLUP);
+  for (int i = 0; i < PHONE_COUNT; i++) {
+    pinMode(p[i].hook, INPUT_PULLUP);
     lastHook[i] = true;
   }
+  
+  Serial.println("/init/begin/");
 
   p[0].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
   p[0].kp.setHoldTime(P1_KEYS_HOLD_TIME);               // Default is 1000mS
@@ -35,52 +36,72 @@ void setup() {
   p[4].kp.addEventListener(P5_KeyPadEvent);  // Add an event listener.
   p[4].kp.setHoldTime(P5_KEYS_HOLD_TIME);               // Default is 1000mS
   p[4].kp.setDebounceTime(P5_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  
+  Serial.println("/init/ok/");
 }
 
-
 void loop() {
-  for(int i=0;i< PHONE_COUNT;i++){
+  static long lastKeyTime;
+  static  long lastTimeMsg;
+  
+  for (int i = 0; i < PHONE_COUNT; i++) {
     Phone ph = p[i];
-    if(offHookChk(ph)){
-      Keypad kp = ph.kp;
-      char key = kp.getKey();
-      if (!key){
+    if (offHookChk(ph)) {
+      char key = p[i].kp.getKey();
+      long keyTime = millis();
+      if (!key && lastKeyTime - keyTime > DELAY_KEY_NOTHING){
         String msg = String("/phone/");
         msg += ph.id;
         msg += "/nothing/";
+        Serial.println(msg);
+        lastKeyTime = keyTime;
       }
-    }
-    else{
+    } else {
       delay(DELAY_ONHOOK * DELAY_COEF);
     }
     delay(DELAY_INTERPHONE * DELAY_COEF);
   }
+  long timeMsg = millis();
+  if (timeMsg - lastTimeMsg > DELAY_TIME_MSG) {
+    String msg = String("/millis/");
+    msg += timeMsg;
+    msg += "/";
+    lastTimeMsg = timeMsg;
+    Serial.println(msg);
+  }
   delay(DELAY_LOOP * DELAY_COEF);
-} 
+}
 
-bool offHookChk(Phone ph){
+bool offHookChk(Phone ph) {
+
+  static long lastTimeHook[PHONE_COUNT];
+  bool offHook = digitalRead(ph.hook);
+  digitalWrite(ph.led, !offHook);
+  byte idx = ph.id;
   
-  bool offHook = !digitalRead(ph.hook);
-  digitalWrite(ph.led,offHook);
-  if(SHOW_ON_HOOK_EVENTS || (lastHook[ph.id] != offHook)){
+  long timeHook = millis();
+  
+  if (SHOW_ON_HOOK_EVENTS && ( (lastTimeHook[idx] - timeHook > DELAY_SHOW_OFFHOOK_EVENTS) || (lastHook[idx] != offHook))) {
     String msg = "/Phone/";
     msg += ph.id;
     msg += "/hook/";
-    msg += offHook?"off/":"on/";
+    msg += offHook ? "off/" : "on/";
     Serial.println(msg);
   }
-  else if(offHook){
+  else if (offHook && (lastTimeHook[idx] - timeHook > DELAY_SHOW_OFFHOOK_EVENTS)) {
     String msg = "/Phone/";
     msg += ph.id;
     msg += "/hook/off/";
     Serial.println(msg);
-  }
-  lastHook[ph.id] = offHook;
+  } 
+  lastHook[idx] = offHook;
+  lastTimeHook[idx] = timeHook;
+  
   return offHook;
 }
 
 
- void myKeyPadListener(Phone ph, KeypadEvent key){
+void myKeyPadListener(Phone_t ph, KeypadEvent key) {
 
   byte phoneId = ph.id;
   Keypad kp = ph.kp;
@@ -88,71 +109,56 @@ bool offHookChk(Phone ph){
   byte state = kp.getState();
 
   String msg;
-  if(SHOW_KEY_EVENTS){
-    msg = String("/phone/");
-    msg+=phoneId;
-    msg+="/key/";
-    msg+=(char)key;
-    msg+="/event/";
-    switch (state){
-    case PRESSED:
-      msg+="PRESSED";
-      break;
-    case RELEASED:
-      msg+="RELEASED";
-      break;
-    case HOLD:
-      msg+="HOLD";
-      break;
-    case IDLE:
-      msg+="IDLE";
-      break;
-    default:
-      msg+=state;
-    }  
-    msg+="/";
-    Serial.println(msg);
-  }
+  if (SHOW_KEY_EVENTS) {
 
-  switch (state){
-  case PRESSED:
     msg = String("/phone/");
-    msg+= ph.id;
-    msg+="/key/";
-    msg+= (char)key;
-    msg+="/";
+    msg += phoneId;
+    msg += "/key/";
+    msg += key;
+    msg += "/event/";
+    switch (state) {
+      case PRESSED:
+        msg += "PRESSED";
+        break;
+      case RELEASED:
+        msg += "RELEASED";
+        break;
+      case HOLD:
+        msg += "HOLD";
+        break;
+      case IDLE:
+        msg += "IDLE";
+        break;
+      default:
+        msg += state;
+    }
+    msg += "/";
     Serial.println(msg);
-  }
+  } else{
+    switch (state) {
+      case PRESSED:
+        msg = String("/phone/");
+        msg += ph.id;
+        msg += "/key/";
+        msg += (char)key;
+        msg += "/";
+        Serial.println(msg);
+    }
+  } 
 }
 
-void P1_KeyPadEvent(KeypadEvent key){
+void P1_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[0], key);
 }
-void P2_KeyPadEvent(KeypadEvent key){
+void P2_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[1], key);
 }
-void P3_KeyPadEvent(KeypadEvent key){
+void P3_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[2], key);
 }
-void P4_KeyPadEvent(KeypadEvent key){
+void P4_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[3], key);
 }
-void P5_KeyPadEvent(KeypadEvent key){
+void P5_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[4], key);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
