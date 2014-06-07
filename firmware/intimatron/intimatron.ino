@@ -9,6 +9,8 @@ static bool lastHook[PHONE_COUNT];
 
 void setup() {
   Serial.begin(9600);
+  
+  while (!Serial); // para analise da real necessidade, na pratica a ausencia nao interferil em nada ate o momento
 
   for (int i = 0; i < PHONE_COUNT; i++) {
     pinMode(p[i].hook, INPUT_PULLUP);

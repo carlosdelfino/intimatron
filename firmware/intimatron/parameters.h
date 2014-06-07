@@ -6,22 +6,26 @@
 #include <Keypad.h>
 
 
-#define DELAY_COEF .1
+#define DELAY_COEF .03
 #define DELAY_ONHOOK 300
 #define DELAY_INTERPHONE 100
 #define DELAY_LOOP 100
 
 #define DELAY_KEY_NOTHING 400
 
-#define DELAY_TIME_MSG 1500
+// tempo entre mensagens de tempo. ddefalt 1500
+#define DELAY_TIME_MSG 3000
 
 #define DELAY_SHOW_OFFHOOK_EVENTS 1000
 
-#define DEFAULT_KEY_HOLD_TIME 500
-#define DEFAULT_KEY_DEBOUNCE_TIME 250
+// default 500
+#define DEFAULT_KEY_HOLD_TIME 100
+// tempo para fazer o debounce da tecla, default 250
+#define DEFAULT_KEY_DEBOUNCE_TIME 150
 
-
+// define se vai exibir todos os eventos de tecla ou somente apertado
 #define SHOW_KEY_EVENTS true
+// exibe tambem quando o gancho e devolvido ao descanso
 #define SHOW_ON_HOOK_EVENTS true
 
 
@@ -185,8 +189,8 @@ byte P4_COL_PINS[KEY_COLS] = {P4_KC1, P4_KC2, P4_KC3, P4_KC4}; //connect to the 
 byte P5_ROW_PINS[KEY_ROWS] = {P5_KR1, P5_KR2, P5_KR3, P5_KR4}; //connect to the row pinouts of the keypad
 byte P5_COL_PINS[KEY_COLS] = {P5_KC1, P5_KC2, P5_KC3, P5_KC4}; //connect to the column pinouts of the keypad
 
-#define P5_KEYS_HOLD_TIME 1000
-#define P5_KEYS_DEBOUNCE_TIME 250
+#define P5_KEYS_HOLD_TIME DEFAULT_KEY_HOLD_TIME
+#define P5_KEYS_DEBOUNCE_TIME DEFAULT_KEY_DEBOUNCE_TIME
 
 // ** Gancho T5 **
 #define P5_HOOK 22
