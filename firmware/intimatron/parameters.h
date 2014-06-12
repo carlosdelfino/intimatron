@@ -5,15 +5,14 @@
 #include <variant.h>
 #include <Keypad.h>
 
-
 #define DELAY_COEF .03
-#define DELAY_ONHOOK 300
-#define DELAY_INTERPHONE 100
-#define DELAY_LOOP 100
+#define DELAY_ONHOOK 10
+#define DELAY_INTERPHONE 10
+#define DELAY_LOOP 10
 
 #define DELAY_KEY_NOTHING 400
 
-// tempo entre mensagens de tempo. ddefalt 1500
+// tempo entre mensagens de tempo. defalt 1500
 #define DELAY_TIME_MSG 3000
 
 #define DELAY_SHOW_OFFHOOK_EVENTS 1000
@@ -21,7 +20,7 @@
 // default 500
 #define DEFAULT_KEY_HOLD_TIME 100
 // tempo para fazer o debounce da tecla, default 250
-#define DEFAULT_KEY_DEBOUNCE_TIME 150
+#define DEFAULT_KEY_DEBOUNCE_TIME 90
 
 // define se vai exibir todos os eventos de tecla ou somente se apertado
 #define SHOW_KEY_ALL_EVENTS true
@@ -61,7 +60,7 @@ byte P0_ROW_PINS[KEY_ROWS] = {P0_KR1, P0_KR2, P0_KR3, P0_KR4}; //connect to the 
 byte P0_COL_PINS[KEY_COLS] = {P0_KC1, P0_KC2, P0_KC3, P0_KC4}; //connect to the column pinouts of the keypad
 
 #define P0_KEYS_HOLD_TIME 500
-#define P0_KEYS_DEBOUNCE_TIME 250
+#define P0_KEYS_DEBOUNCE_TIME 90
 // ** Gancho T1 **
 #define P0_HOOK 25
 // ** Led Display T1 **
@@ -99,7 +98,7 @@ byte P1_ROW_PINS[KEY_ROWS] = {P1_KR1, P1_KR2, P1_KR3, P1_KR4}; //connect to the 
 byte P1_COL_PINS[KEY_COLS] = {P1_KC1, P1_KC2, P1_KC3, P1_KC4}; //connect to the column pinouts of the keypad
 
 #define P1_KEYS_HOLD_TIME 500
-#define P1_KEYS_DEBOUNCE_TIME 250
+#define P1_KEYS_DEBOUNCE_TIME 90
 
 // ** Gancho T2 **
 #define P1_HOOK  45
@@ -131,7 +130,7 @@ byte P2_ROW_PINS[KEY_ROWS] = {P2_KR1, P2_KR2, P2_KR3, P2_KR4}; //connect to the 
 byte P2_COL_PINS[KEY_COLS] = {P2_KC1, P2_KC2, P2_KC3, P2_KC4}; //connect to the column pinouts of the keypad
 
 #define P2_KEYS_HOLD_TIME 500
-#define P2_KEYS_DEBOUNCE_TIME 250
+#define P2_KEYS_DEBOUNCE_TIME 90
 
 // ** Gancho T3 **
 #define P2_HOOK A7
@@ -160,7 +159,7 @@ byte P3_ROW_PINS[KEY_ROWS] = {P3_KR1, P3_KR2, P3_KR3, P3_KR4}; //connect to the 
 byte P3_COL_PINS[KEY_COLS] = {P3_KC1, P3_KC2, P3_KC3, P3_KC4}; //connect to the column pinouts of the keypad
 
 #define P3_KEYS_HOLD_TIME 500
-#define P3_KEYS_DEBOUNCE_TIME 250
+#define P3_KEYS_DEBOUNCE_TIME 90
 
 // ** Gancho T4 **
 #define P3_HOOK 42
