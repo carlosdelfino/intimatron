@@ -12,33 +12,45 @@ void setup() {
   
   while (!Serial); // para analise da real necessidade, na pratica a ausencia nao interferil em nada ate o momento
 
+  Serial.println("/init/begin/");
+
   for (int i = 0; i < PHONE_COUNT; i++) {
     pinMode(p[i].hook, INPUT_PULLUP);
     lastHook[i] = true;
   }
   
-  Serial.println("/init/begin/");
+  Serial.println("/init/ports/ok/");
 
-  p[0].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
-  p[0].kp.setHoldTime(P1_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[0].kp.setDebounceTime(P1_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[0].kp.addEventListener(P0_KeyPadEvent);  // Add an event listener.
+  p[0].kp.setHoldTime(P0_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[0].kp.setDebounceTime(P0_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[1].kp.addEventListener(P2_KeyPadEvent);  // Add an event listener.
-  p[1].kp.setHoldTime(P2_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[1].kp.setDebounceTime(P2_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  Serial.println("/init/phone/0/keypad/ok/");
 
-  p[2].kp.addEventListener(P3_KeyPadEvent);  // Add an event listener.
-  p[2].kp.setHoldTime(P3_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[2].kp.setDebounceTime(P3_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[1].kp.addEventListener(P1_KeyPadEvent);  // Add an event listener.
+  p[1].kp.setHoldTime(P1_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[1].kp.setDebounceTime(P1_KEYS_DEBOUNCE_TIME);           // Default is 50mS
 
-  p[3].kp.addEventListener(P4_KeyPadEvent);  // Add an event listener.
-  p[3].kp.setHoldTime(P4_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[3].kp.setDebounceTime(P4_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  Serial.println("/init/phone/1/keypad/ok/");
 
-  p[4].kp.addEventListener(P5_KeyPadEvent);  // Add an event listener.
-  p[4].kp.setHoldTime(P5_KEYS_HOLD_TIME);               // Default is 1000mS
-  p[4].kp.setDebounceTime(P5_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+  p[2].kp.addEventListener(P2_KeyPadEvent);  // Add an event listener.
+  p[2].kp.setHoldTime(P2_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[2].kp.setDebounceTime(P2_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+
+  Serial.println("/init/phone/2/keypad/ok/");
+
+  p[3].kp.addEventListener(P3_KeyPadEvent);  // Add an event listener.
+  p[3].kp.setHoldTime(P3_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[3].kp.setDebounceTime(P3_KEYS_DEBOUNCE_TIME);           // Default is 50mS
+
+  Serial.println("/init/phone/3/keypad/ok/");
+
+  p[4].kp.addEventListener(P4_KeyPadEvent);  // Add an event listener.
+  p[4].kp.setHoldTime(P4_KEYS_HOLD_TIME);               // Default is 1000mS
+  p[4].kp.setDebounceTime(P4_KEYS_DEBOUNCE_TIME);           // Default is 50mS
   
+  Serial.println("/init/phone/4P0_/keypad/ok/");
+
   Serial.println("/init/ok/");
 }
 
@@ -149,18 +161,18 @@ void myKeyPadListener(Phone_t ph, KeypadEvent key) {
   } 
 }
 
-void P1_KeyPadEvent(KeypadEvent key) {
+void P0_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[0], key);
 }
-void P2_KeyPadEvent(KeypadEvent key) {
+void P1_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[1], key);
 }
-void P3_KeyPadEvent(KeypadEvent key) {
+void P2_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[2], key);
 }
-void P4_KeyPadEvent(KeypadEvent key) {
+void P3_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[3], key);
 }
-void P5_KeyPadEvent(KeypadEvent key) {
+void P4_KeyPadEvent(KeypadEvent key) {
   myKeyPadListener(p[4], key);
 }
