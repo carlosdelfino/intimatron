@@ -95,19 +95,13 @@ bool offHookChk(Phone ph) {
   
   long timeHook = millis();
   
-  if (SHOW_ON_HOOK_EVENTS && ( (lastTimeHook[idx] - timeHook > DELAY_SHOW_OFFHOOK_EVENTS) || (lastHook[idx] != offHook))) {
+  if ( (lastTimeHook[idx] - timeHook > DELAY_SHOW_OFFHOOK_EVENTS) || (lastHook[idx] != offHook)) {
     String msg = "/Phone/";
     msg += ph.id;
     msg += "/hook/";
     msg += offHook ? "off/" : "on/";
     Serial.println(msg);
   }
-  else if (offHook && (lastTimeHook[idx] - timeHook > DELAY_SHOW_OFFHOOK_EVENTS)) {
-    String msg = "/Phone/";
-    msg += ph.id;
-    msg += "/hook/off/";
-    Serial.println(msg);
-  } 
   lastHook[idx] = offHook;
   lastTimeHook[idx] = timeHook;
   
@@ -123,7 +117,7 @@ void myKeyPadListener(Phone_t ph, KeypadEvent key) {
   byte state = kp.getState();
 
   String msg;
-  if (SHOW_KEY_EVENTS) {
+  if (SHOW_KEY_ALL_EVENTS) {
 
     msg = String("/phone/");
     msg += phoneId;

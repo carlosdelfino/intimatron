@@ -23,10 +23,8 @@
 // tempo para fazer o debounce da tecla, default 250
 #define DEFAULT_KEY_DEBOUNCE_TIME 150
 
-// define se vai exibir todos os eventos de tecla ou somente apertado
-#define SHOW_KEY_EVENTS true
-// exibe tambem quando o gancho e devolvido ao descanso
-#define SHOW_ON_HOOK_EVENTS true
+// define se vai exibir todos os eventos de tecla ou somente se apertado
+#define SHOW_KEY_ALL_EVENTS true
 
 
 #define KEY_ROWS 4
