@@ -139,6 +139,7 @@ void myKeyPadListener(Phone_t ph, KeypadEvent key) {
         break;
       default:
         msg += state;
+        break; // desnecessario, por cautela.
     }
     msg += "/";
     Serial.println(msg);
